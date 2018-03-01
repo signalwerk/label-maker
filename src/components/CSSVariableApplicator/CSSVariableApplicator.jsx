@@ -11,7 +11,7 @@ class CSSVariableApplicator extends Component {
     }
   }
   updateCSSVariables(variables) {
-    console.log("updateCSSVariables", variables);
+    // console.log("updateCSSVariables", variables);
 
     Object.keys(variables).forEach(function(key) {
       document.documentElement.style.setProperty(key, variables[key]);

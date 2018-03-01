@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { addUrlProps, UrlQueryParamTypes } from "react-url-query";
 import PropTypes from "prop-types";
 import styles from "./MainPage.scss";
-import Textlayer from "../Textlayer/Textlayer";
 import Ui from "../Ui/Ui";
 import Page from "../Page/Page";
 import CSSVariableApplicator from "../CSSVariableApplicator/CSSVariableApplicator";
@@ -78,31 +77,6 @@ class MainPage extends PureComponent {
     super();
 
     const body = document.getElementsByTagName("body")[0];
-
-    // onChangeWidth = width => {
-    //   this.props.onChangeWidth(width);
-    // };
-    // onChangeHeight = height => {
-    //   this.props.onChangeHeight(height);
-    // };
-    // onChangeTop = top => {
-    //   this.props.onChangeTop(top);
-    // };
-    // onChangeRight = right => {
-    //   this.props.onChangeRight(right);
-    // };
-    // onChangeBottom = bottom => {
-    //   this.props.onChangeBottom(bottom);
-    // };
-    // onChangeLeft = left => {
-    //   this.props.onChangeLeft(left);
-    // };
-    // onChangeBleed = bleed => {
-    //   this.props.onChangeBleed(bleed);
-    // };
-    // onChangeCropmark = cropmark => {
-    //   this.props.onChangeCropmark(cropmark);
-    // };
   }
 
   toggleClickHandler = () => {
