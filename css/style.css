@@ -3,8 +3,11 @@
   --height: 130;
 
   /* usualy same as format size */
-  --design-grid-width: 80;
-  --design-grid-height: 120;
+
+  --design-grid-top: 5;
+  --design-grid-right: 10;
+  --design-grid-bottom: 5;
+  --design-grid-left: 10;
 
   --screenscale: 4;
   --printscale: 1.0465;
@@ -76,7 +79,7 @@ body {
   }
 }
 
-.crop-marks {
+.cropMarks {
   position: absolute;
   top: 0;
   left: 0;
@@ -87,18 +90,18 @@ body {
 }
 
 @media print {
-  .crop-marks {
+  .cropMarks {
     border: calc(var(--bleed) * var(--printscale) * 1mm) solid white;
   }
 }
 
-.crop-mark {
+.cropMark {
   position: absolute;
   border: solid black;
   z-index: -1;
 }
 
-.crop-mark.vertical {
+.cropMark.vertical {
   position: absolute;
   top: calc(var(--cropmark) * var(--screenscale) * -1px);
   bottom: calc(var(--cropmark) * var(--screenscale) * -1px);
@@ -108,13 +111,13 @@ body {
 }
 
 @media print {
-  .crop-mark.vertical {
+  .cropMark.vertical {
     top: calc(var(--cropmark) * var(--printscale) * -1mm);
     bottom: calc(var(--cropmark) * var(--printscale) * -1mm);
   }
 }
 
-.crop-mark.horizontal {
+.cropMark.horizontal {
   position: absolute;
   top: 0;
   left: calc(var(--cropmark) * var(--screenscale) * -1px);
@@ -124,7 +127,7 @@ body {
 }
 
 @media print {
-  .crop-mark.horizontal {
+  .cropMark.horizontal {
     left: calc(var(--cropmark) * var(--printscale) * -1mm);
     right: calc(var(--cropmark) * var(--printscale) * -1mm);
   }
@@ -216,86 +219,44 @@ body {
   }
 }
 
-.design-grid {
+.designGrid {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 
-  width: calc(var(--design-grid-width) * var(--screenscale) * 1px);
-  height: calc(var(--design-grid-height) * var(--screenscale) * 1px);
+  width: calc(
+     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
+      var(--screenscale) * 1px
+  );
+  height: calc(
+     (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
+      var(--screenscale) * 1px
+  );
 
-  /* center the design grid */
-  margin-top: calc(
-     (var(--height) - var(--design-grid-height)) / 2 * var(--screenscale) * 1px
-  );
-  margin-left: calc(
-     (var(--width) - var(--design-grid-width)) / 2 * var(--screenscale) * 1px
-  );
+  /* place the design grid */
+  margin-top: calc(var(--design-grid-top) * var(--screenscale) * 1px);
+  margin-left: calc(var(--design-grid-left) * var(--screenscale) * 1px);
 
   /* background-color: gray; */
   box-sizing: border-box;
 }
 
 @media print {
-  .design-grid {
-    width: calc(var(--design-grid-width) * var(--printscale) * 1mm);
-    height: calc(var(--design-grid-height) * var(--printscale) * 1mm);
-
-    /* center the design grid */
-    margin-top: calc(
-       (var(--height) - var(--design-grid-height)) / 2 * var(--printscale) * 1mm
+  .designGrid {
+    width: calc(
+       (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
+        var(--printscale) * 1mm
     );
-    margin-left: calc(
-       (var(--width) - var(--design-grid-width)) / 2 * var(--printscale) * 1mm
-    );
-  }
-}
-
-.design-grid-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  /* 4% left and right */
-  margin-left: calc(
-    var(--design-grid-height) / 100 * 4 * var(--screenscale) * 1px
-  );
-  margin-right: calc(
-    var(--design-grid-height) / 100 * 4 * var(--screenscale) * 1px
-  );
-
-  /* 2% top and bottom */
-  margin-top: calc(
-    var(--design-grid-height) / 100 * 2 * var(--screenscale) * 1px
-  );
-  margin-bottom: calc(
-    var(--design-grid-height) / 100 * 2 * var(--screenscale) * 1px
-  );
-  /* background-color: darkgray; */
-  box-sizing: border-box;
-}
-
-@media print {
-  .design-grid-inner {
-    /* 4% left and right */
-    margin-left: calc(
-      var(--design-grid-height) / 100 * 4 * var(--printscale) * 1mm
-    );
-    margin-right: calc(
-      var(--design-grid-height) / 100 * 4 * var(--printscale) * 1mm
+    height: calc(
+       (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
+        var(--printscale) * 1mm
     );
 
-    /* 2% top and bottom */
-    margin-top: calc(
-      var(--design-grid-height) / 100 * 2 * var(--printscale) * 1mm
-    );
-    margin-bottom: calc(
-      var(--design-grid-height) / 100 * 2 * var(--printscale) * 1mm
-    );
+    /* place the design grid */
+    margin-top: calc(var(--design-grid-top) * var(--printscale) * 1mm);
+    margin-left: calc(var(--design-grid-left) * var(--printscale) * 1mm);
   }
 }
 
