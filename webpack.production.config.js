@@ -32,6 +32,7 @@ loaders.push({
 });
 
 module.exports = {
+  mode: "production",
   entry: ["./src/index.jsx"],
   output: {
     publicPath: "./",
@@ -48,6 +49,11 @@ module.exports = {
   module: {
     rules: loaders
   },
+  // optimization: {
+  //   minimize: {
+  //     sourceMap: true
+  //   }
+  // },
   plugins: [
     new WebpackCleanupPlugin(),
     new webpack.DefinePlugin({
@@ -55,14 +61,6 @@ module.exports = {
         NODE_ENV: '"production"'
       }
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false,
-    //     screw_ie8: true,
-    //     drop_console: true,
-    //     drop_debugger: true
-    //   }
-    // }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin("[contenthash].css", {
       allChunks: true
@@ -71,6 +69,5 @@ module.exports = {
       template: "./src/template.html",
       title: "Webpack App"
     })
-    // new webpack.optimize.DedupePlugin()
   ]
 };
