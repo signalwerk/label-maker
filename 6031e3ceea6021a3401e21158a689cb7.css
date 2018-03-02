@@ -1,3 +1,11 @@
+.MainPage___2ZK4M {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: scroll;
+}
 html {
   margin: 0;
   padding: 0;
@@ -28,14 +36,6 @@ body,
   width: 100%;
   position: absolute;
   overflow: hidden;
-}
-.MainPage___2ZK4M {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  width: 100%;
-  position: absolute;
-  overflow: scroll;
 }
 .ui___hAQjW {
   position: fixed;
@@ -115,15 +115,15 @@ body,
   --design-grid-left: 10;
   --screenscale: 4;
   --printscale: 1;
-  --pScale: 1;
-  --h1Scale: 1;
+  --pScale: 100;
+  --h1Scale: 100;
   --bleed: 3;
   --cropmark: 10;
   --print-width: 210;
   --print-height: 297;
   --line-width: calc(var(--height) / 250);
-  --font-size: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 * var(--h1Scale));
-  --font-size-small: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 30 * var(--pScale));
+  --font-size: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 * var(--h1Scale) / 100);
+  --font-size-small: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 30 * var(--pScale) / 100);
 }
 
 @media print {
@@ -285,12 +285,6 @@ body,
   top: 100%;
 }
 
-@media print {
-  .bottom___2UYkk {
-    top: calc(100% - ((var(--line-width) * 1mm) / 2));
-  }
-}
-
 .content___16-xN {
   position: absolute;
   top: 0;
@@ -345,6 +339,24 @@ h1 {
   }
 }
 
+h2 {
+  font-size: calc( (var(--font-size-small) + var(--font-size)) / 2 * var(--screenscale) * 1px);
+  margin: calc( (var(--font-size-small) + var(--font-size)) / 2 * var(--screenscale) * 1px / 10) 0;
+  line-height: 1;
+}
+
+@media print {
+  h2 {
+    font-size: calc( (var(--font-size-small) + var(--font-size)) / 2 * var(--printscale) * 1mm);
+    margin: calc( (var(--font-size-small) + var(--font-size)) / 2 * var(--printscale) * 1mm / 10) 0;
+  }
+}
+
+p {
+  font-weight: 600;
+}
+
+h3,
 p {
   margin: 0;
   font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
@@ -352,12 +364,16 @@ p {
 }
 
 @media print {
+  h3,
   p {
     font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
     padding-top: calc(var(--line-width) * var(--printscale) * 1mm * 1.6);
   }
 }
 
+h3 ~ h3,
+p ~ h3,
+h3 ~ p,
 p ~ p {
   padding-top: 0;
 }
