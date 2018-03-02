@@ -23,7 +23,7 @@ $debug: false;
   --print-width: 210;
   --print-height: 297;
 
-  --line-width: calc(var(--height) / 200);
+  --line-width: calc(var(--height) / 250);
   --font-size: calc(
     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 *
       var(--h1Scale)
@@ -186,6 +186,7 @@ $debug: false;
 @media print {
   .frontline {
     height: 0;
+    background-color: white;
     border-bottom-width: calc(var(--line-width) * var(--printscale) * 1mm);
     margin-top: calc(0mm - ((var(--line-width) * var(--printscale) * 1mm) / 2));
   }
