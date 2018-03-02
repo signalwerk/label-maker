@@ -55,24 +55,23 @@ class Page extends PureComponent {
             <div className={styles.crop}>
               <div className={styles.content}>
                 <div className={styles.designGrid}>
-                  <hr className={`${styles.frontline} ${styles.top}`} />
-                  <div
-                    className={`${styles.box} ${styles.right} ${styles.top}`}
-                  >
-                    {texts[0]}
-                  </div>
-                  <hr className={`${styles.frontline} ${styles.onequarter}`} />
-                  <div className={`${styles.box} ${styles.onequarter}`}>
-                    <span>{texts[1]}</span>
-                  </div>
-                  <hr className={`${styles.frontline} ${styles.center}`} />
-                  <div className={`${styles.box} ${styles.center}`}>
-                    <span>{texts[2]}</span>
-                  </div>
-                  <hr className={`${styles.frontline} ${styles.treequarter}`} />
-                  <div className={`${styles.box} ${styles.treequarter}`}>
-                    <span>{texts[3]}</span>
-                  </div>
+                  {this.props.text
+                    .split("----")
+                    .slice(0, 4)
+                    .map((text, i) => {
+                      return [
+                        <hr
+                          className={`${styles.frontline} ${
+                            styles["section_" + i]
+                          }`}
+                        />,
+                        <div
+                          className={`${styles.box} ${styles["section_" + i]}`}
+                        >
+                          <span>{md(text)}</span>
+                        </div>
+                      ];
+                    })}
                 </div>
               </div>
             </div>

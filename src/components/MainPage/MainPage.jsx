@@ -18,7 +18,10 @@ const urlPropsQueryConfig = {
   bleed: { type: UrlQueryParamTypes.number },
   printscale: { type: UrlQueryParamTypes.number },
   cropmark: { type: UrlQueryParamTypes.boolean },
-  isUiVisible: { type: UrlQueryParamTypes.boolean }
+  isUiVisible: { type: UrlQueryParamTypes.boolean },
+
+  pScale: { type: UrlQueryParamTypes.number },
+  h1Scale: { type: UrlQueryParamTypes.number }
 };
 
 class MainPage extends PureComponent {
@@ -37,6 +40,9 @@ class MainPage extends PureComponent {
     cropmark: PropTypes.bool,
     isUiVisible: PropTypes.bool,
 
+    pScale: PropTypes.number,
+    h1Scale: PropTypes.number,
+
     // change handlers are automatically generated when given a config.
     // By default they update that single query parameter and maintain existing
     // values in the other parameters.
@@ -51,7 +57,10 @@ class MainPage extends PureComponent {
     onChangeBleed: PropTypes.func.isRequired,
     onChangeCropmark: PropTypes.func.isRequired,
     onChangePrintscale: PropTypes.func.isRequired,
-    onChangeIsUiVisible: PropTypes.func.isRequired
+    onChangeIsUiVisible: PropTypes.func.isRequired,
+
+    onChangePScale: PropTypes.func.isRequired,
+    onChangeH1Scale: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -71,7 +80,9 @@ class MainPage extends PureComponent {
     bleed: 3,
     printscale: 100,
     cropmark: true,
-    isUiVisible: false
+    isUiVisible: false,
+    pScale: 1,
+    h1Scale: 1
   };
   constructor() {
     super();
@@ -95,7 +106,17 @@ class MainPage extends PureComponent {
               "--design-grid-right": this.props.right,
               "--design-grid-bottom": this.props.bottom,
               "--design-grid-left": this.props.left,
-              "--printscale": this.props.printscale / 100
+              "--printscale": this.props.printscale / 100,
+
+              "--pScale": this.props.pScale,
+              "--h1Scale": this.props.h1Scale
+
+              // "--format-ratio": Math.max(
+              //   (this.props.height - this.props.top - this.props.bottom) /
+              //     (this.props.width - this.props.left - this.props.right),
+              //   (this.props.width - this.props.left - this.props.right) /
+              //     (this.props.height - this.props.top - this.props.bottom)
+              // )
             }}
           />
 
@@ -116,6 +137,8 @@ class MainPage extends PureComponent {
             bleed={this.props.bleed}
             printscale={this.props.printscale}
             cropmark={this.props.cropmark}
+            pScale={this.props.pScale}
+            h1Scale={this.props.h1Scale}
             changeText={this.props.onChangeText}
             changeWidth={this.props.onChangeWidth}
             changeHeight={this.props.onChangeHeight}
@@ -126,6 +149,8 @@ class MainPage extends PureComponent {
             changeBleed={this.props.onChangeBleed}
             changePrintscale={this.props.onChangePrintscale}
             changeCropmark={this.props.onChangeCropmark}
+            changePScale={this.props.onChangePScale}
+            changeH1Scale={this.props.onChangeH1Scale}
           />
         </div>
       </div>

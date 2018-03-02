@@ -14,6 +14,9 @@ $debug: false;
 
   --screenscale: 4;
   --printscale: 1;
+  --pScale: 1;
+  --h1Scale: 1;
+
   --bleed: 3;
   --cropmark: 10;
 
@@ -21,8 +24,22 @@ $debug: false;
   --print-height: 297;
 
   --line-width: calc(var(--height) / 200);
-  --font-size: calc(var(--width) / 8);
-  --font-size-small: calc(var(--width) / 35);
+  --font-size: calc(
+    (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 *
+      var(--h1Scale)
+  );
+  --font-size-small: calc(
+    (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 30 *
+      var(--pScale)
+  );
+
+  // --format-ratio: calc(
+  //   (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) /
+  //     (var(--width) - var(--design-grid-left) - var(--design-grid-right))
+  // );
+  //
+  // --font-size: calc(var(--format-ratio) * 7.5);
+  // --font-size-small: calc(var(--format-ratio) * 1.65);
 }
 
 @media print {
@@ -47,7 +64,7 @@ $debug: false;
 .container {
   position: relative;
   margin: 0 auto;
-  margin-top: calc((100vh - (var(--height) * var(--screenscale) * 1px))/2);
+  margin-top: calc((100vh - (var(--height) * var(--screenscale) * 1px)) / 2);
 
   width: calc((var(--width) + 2 * var(--bleed)) * var(--screenscale) * 1px);
   height: calc((var(--height) + 2 * var(--bleed)) * var(--screenscale) * 1px);
@@ -57,11 +74,10 @@ $debug: false;
   .container {
     position: relative;
     margin-top: calc(
-
-        (
-          var(--print-height) * 1mm - ((var(--height) + 2 * var(--bleed)) *
-                var(--printscale) * 1mm)
-        )/2
+      (
+          var(--print-height) * 1mm -
+            ((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm)
+        ) / 2
     );
 
     width: calc((var(--width) + 2 * var(--bleed)) * var(--printscale) * 1mm);
@@ -156,37 +172,43 @@ $debug: false;
   position: absolute;
   margin: 0;
   padding: 0;
-  height: 0;
   width: 100%;
   border: none;
-  border-bottom: calc(var(--line-width) * var(--screenscale) * 1px) solid black;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  // border-bottom-width: calc(var(--line-width) * var(--screenscale) * 1px);
+  border-bottom-width: calc(var(--line-width) * var(--screenscale) * 1px - 1px);
   margin-top: calc(0px - ((var(--line-width) * var(--screenscale) * 1px) / 2));
+  height: 1px;
+  background-color: black;
 }
 
 @media print {
   .frontline {
+    height: 0;
     border-bottom-width: calc(var(--line-width) * var(--printscale) * 1mm);
     margin-top: calc(0mm - ((var(--line-width) * var(--printscale) * 1mm) / 2));
   }
 }
 
-.top {
+.section_0 {
   top: 0%;
+  text-align: right;
 }
 
-.onequarter {
+.section_1 {
   top: 25%;
 }
 
-.center {
+.section_2 {
   top: 50%;
 }
 
-.treequarter {
+.section_3 {
   top: 75%;
 }
 
-.bottom {
+.section_4 {
   top: 100%;
 }
 
@@ -220,11 +242,11 @@ $debug: false;
   bottom: 0;
 
   width: calc(
-     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
+    (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
       var(--screenscale) * 1px
   );
   height: calc(
-     (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
+    (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
       var(--screenscale) * 1px
   );
 
@@ -241,11 +263,11 @@ $debug: false;
 @media print {
   .designGrid {
     width: calc(
-       (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
+      (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
         var(--printscale) * 1mm
     );
     height: calc(
-       (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
+      (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
         var(--printscale) * 1mm
     );
 
@@ -263,17 +285,8 @@ $debug: false;
   @if $debug == true {
     background-color: rgba(255, 0, 0, 0.5);
   }
-  font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
-  padding-top: calc(var(--font-size-small) * var(--screenscale) * 1px / 5);
   box-sizing: border-box;
   line-height: 1.2;
-}
-
-@media print {
-  .box {
-    font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
-    padding-top: calc(var(--font-size-small) * var(--printscale) * 1mm / 5);
-  }
 }
 
 // .cap {
@@ -282,19 +295,31 @@ $debug: false;
 
 h1 {
   font-size: calc(var(--font-size) * var(--screenscale) * 1px);
-  margin-top: calc(var(--font-size) * var(--screenscale) * 1px / 10);
+  margin: calc(var(--font-size) * var(--screenscale) * 1px / 10) 0;
   line-height: 1;
 }
 @media print {
   h1 {
     font-size: calc(var(--font-size) * var(--printscale) * 1mm);
-    margin-top: calc(var(--font-size) * var(--printscale) * 1mm / 10);
+    margin: calc(var(--font-size) * var(--printscale) * 1mm / 10) 0;
   }
-}
-.right {
-  text-align: right;
 }
 
 p {
   margin: 0;
+  font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
+  // padding-top: calc(var(--font-size-small) * var(--screenscale) * 1px / 5 + );
+  padding-top: calc(var(--line-width) * var(--screenscale) * 1px * 1.6);
+}
+
+@media print {
+  p {
+    font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
+    // padding-top: calc(var(--font-size-small) * var(--printscale) * 1mm / 5 + );
+    padding-top: calc(var(--line-width) * var(--printscale) * 1mm * 1.6);
+  }
+}
+
+p ~ p {
+  padding-top: 0;
 }

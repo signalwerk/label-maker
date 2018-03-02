@@ -17,6 +17,9 @@ class Ui extends PureComponent {
     printscale: PropTypes.number.isRequired,
     cropmark: PropTypes.bool.isRequired,
 
+    pScale: PropTypes.number.isRequired,
+    h1Scale: PropTypes.number.isRequired,
+
     changeText: PropTypes.func.isRequired,
     changeWidth: PropTypes.func.isRequired,
     changeHeight: PropTypes.func.isRequired,
@@ -26,7 +29,9 @@ class Ui extends PureComponent {
     changeLeft: PropTypes.func.isRequired,
     changeBleed: PropTypes.func.isRequired,
     changePrintscale: PropTypes.func.isRequired,
-    changeCropmark: PropTypes.func.isRequired
+    changeCropmark: PropTypes.func.isRequired,
+    changePScale: PropTypes.func.isRequired,
+    changeH1Scale: PropTypes.func.isRequired
   };
 
   changeText = event => {
@@ -58,6 +63,12 @@ class Ui extends PureComponent {
   };
   changeCropmark = event => {
     this.props.changeCropmark(event.target.value);
+  };
+  changePScale = event => {
+    this.props.changePScale(event.target.value);
+  };
+  changeH1Scale = event => {
+    this.props.changeH1Scale(event.target.value);
   };
 
   render() {
@@ -120,6 +131,30 @@ class Ui extends PureComponent {
               type="number"
               value={this.props.height}
               onChange={this.changeHeight}
+            />
+          </div>
+
+          <div className={styles.value}>
+            <div className={styles.value__caption}>
+              p-Scale <span className={styles.value__valuerange}>0–~</span>
+            </div>
+            <input
+              className={styles.value__input}
+              type="number"
+              value={this.props.pScale}
+              onChange={this.changePScale}
+            />
+          </div>
+
+          <div className={styles.value}>
+            <div className={styles.value__caption}>
+              H1-Scale <span className={styles.value__valuerange}>0–~</span>
+            </div>
+            <input
+              className={styles.value__input}
+              type="number"
+              value={this.props.h1Scale}
+              onChange={this.changeH1Scale}
             />
           </div>
 
