@@ -53,9 +53,6 @@ if [ $(git status --porcelain | wc -l) -lt 1 ]; then
     echo "   * No changes to the output on this push; exiting."
     echo "      – path: $DEPLOY_DIR"
     ls -las .
-    git status
-    git commit -a -m "final test"
-
     exit 0
 fi
 
