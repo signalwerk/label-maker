@@ -11,10 +11,17 @@ const PORT = process.env.PORT || "8888";
 
 loaders.push({
   test: /\.scss$/,
-  loaders: [
-    "style-loader?sourceMap",
-    "css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&sourceMap",
-    "sass-loader"
+  use: [
+    {
+      loader: "style-loader?sourceMap"
+    },
+    {
+      loader:
+        "css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]&sourceMap"
+    },
+    {
+      loader: "sass-loader"
+    }
   ],
   exclude: ["node_modules"]
 });
@@ -34,7 +41,7 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
   module: {
-    loaders
+    rules: loaders
   },
   devServer: {
     contentBase: "./public",

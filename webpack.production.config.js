@@ -46,7 +46,7 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
   module: {
-    loaders
+    rules: loaders
   },
   plugins: [
     new WebpackCleanupPlugin(),
@@ -55,14 +55,14 @@ module.exports = {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        screw_ie8: true,
-        drop_console: true,
-        drop_debugger: true
-      }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false,
+    //     screw_ie8: true,
+    //     drop_console: true,
+    //     drop_debugger: true
+    //   }
+    // }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin("[contenthash].css", {
       allChunks: true
@@ -70,7 +70,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/template.html",
       title: "Webpack App"
-    }),
-    new webpack.optimize.DedupePlugin()
+    })
+    // new webpack.optimize.DedupePlugin()
   ]
 };

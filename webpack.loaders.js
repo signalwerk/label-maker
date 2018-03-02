@@ -6,7 +6,14 @@ module.exports = [
   },
   {
     test: /\.css$/,
-    loaders: ["style-loader", "css-loader?importLoaders=1"],
+    use: [
+      {
+        loader: "style-loader"
+      },
+      {
+        loader: "css-loader?importLoaders=1"
+      }
+    ],
     exclude: ["node_modules"]
   },
 
