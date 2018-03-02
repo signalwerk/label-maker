@@ -213,12 +213,6 @@ $debug: false;
   top: 100%;
 }
 
-@media print {
-  .bottom {
-    top: calc(100% - ((var(--line-width) * 1mm) / 2));
-  }
-}
-
 .content {
   position: absolute;
   top: 0;
