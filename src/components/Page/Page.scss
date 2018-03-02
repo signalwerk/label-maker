@@ -182,7 +182,9 @@ $debug: false;
   height: 1px;
   background-color: black;
 }
-
+.frontline:global(.empty) {
+  display: none;
+}
 @media print {
   .frontline {
     height: 0;

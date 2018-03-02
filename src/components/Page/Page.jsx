@@ -46,6 +46,13 @@ let md = dataIn => {
   return data;
 };
 
+let isEmpty = text => {
+  if (text === "\n" || text === "\r\n") {
+    return "empty";
+  }
+  return "normal";
+};
+
 class Page extends PureComponent {
   render() {
     let texts = this.props.text.split("----").map((text, i) => {
@@ -69,12 +76,14 @@ class Page extends PureComponent {
                     .map((text, i) => {
                       return [
                         <hr
-                          className={`${styles.frontline} ${
+                          className={`${styles.frontline} ${isEmpty(text)} ${
                             styles["section_" + i]
                           }`}
                         />,
                         <div
-                          className={`${styles.box} ${styles["section_" + i]}`}
+                          className={`${styles.box} ${isEmpty(text)} ${
+                            styles["section_" + i]
+                          }`}
                         >
                           <span>{md(text)}</span>
                         </div>
