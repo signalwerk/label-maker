@@ -1,14 +1,23 @@
 #!/bin/bash
 
-
 set -e # Exit with nonzero exit code if anything fails
-
 
 echo "-- start"
 
 SOURCE_BRANCH="${SOURCE_BRANCH:-master}"
 TARGET_BRANCH="${TARGET_BRANCH:-gh-pages}"
 DEPLOY_DIR="${DEPLOY_DIR:-public}"
+
+echo "   Variables"
+echo "   * SOURCE_BRANCH=${SOURCE_BRANCH}"
+echo "   * TARGET_BRANCH=${TARGET_BRANCH}"
+echo "   * DEPLOY_DIR=${DEPLOY_DIR}"
+echo "   * ENCRYPTION_LABEL=${ENCRYPTION_LABEL}"
+echo "   * COMMIT_AUTHOR_EMAIL=${COMMIT_AUTHOR_EMAIL}"
+echo "   * COMMIT_AUTHOR_EMAIL=${COMMIT_AUTHOR_EMAIL}"
+echo "   * REPO=${REPO}"
+echo "   * TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}"
+echo "   * TRAVIS_BRANCH=${TRAVIS_BRANCH}"
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
@@ -21,6 +30,7 @@ REPO=`git config remote.origin.url`
 echo "   * get repo"
 SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
 SHA=`git rev-parse --verify HEAD`
+echo "   * SHA=${SHA}"
 
 # Clone the existing gh-pages for this repo into $DEPLOY_DIR/
 # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
