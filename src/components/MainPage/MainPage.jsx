@@ -81,8 +81,8 @@ class MainPage extends PureComponent {
     printscale: 100,
     cropmark: true,
     isUiVisible: false,
-    pScale: 1,
-    h1Scale: 1
+    pScale: 100,
+    h1Scale: 100
   };
   constructor() {
     super();

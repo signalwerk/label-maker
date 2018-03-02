@@ -13,6 +13,14 @@ let md = dataIn => {
 
   for (var i = 0; i < tree.length; ++i) {
     // turn #s into heading tags if #s are present
+    if (tree[i].match(/^### /g)) {
+      let title = tree[i].replace(/^### (.*)/gm, "$1");
+      data[i] = <h3>{title}</h3>;
+    }
+    if (tree[i].match(/^## /g)) {
+      let title = tree[i].replace(/^## (.*)/gm, "$1");
+      data[i] = <h2>{title}</h2>;
+    }
     if (tree[i].match(/^# /g)) {
       let title = tree[i].replace(/^# (.*)/gm, "$1");
       data[i] = <h1>{title}</h1>;
