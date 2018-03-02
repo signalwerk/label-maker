@@ -1,10 +1,33 @@
-.MainPage___2ZK4M {
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 20px;
+  min-height: 100%;
+  width: 100%;
+  line-height: 1.5;
+  font-feature-settings: "cpsp";
+  overflow: hidden;
+}
+
+.container,
+.container > div {
   margin: 0;
   padding: 0;
   min-height: 100%;
   width: 100%;
   position: absolute;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+body,
+#react-root___3ejJB {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
 }
 .ui___hAQjW {
   position: fixed;
@@ -73,6 +96,14 @@
   font-size: 1rem;
   background-color: #e6e6e6;
   box-sizing: border-box;
+}
+.MainPage___2ZK4M {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: scroll;
 }
 :root {
   --width: 90;
@@ -359,35 +390,4 @@ p {
   .uiToggle___2jfFU {
     display: none;
   }
-}
-html {
-  margin: 0;
-  padding: 0;
-  font-family: "Work Sans", sans-serif;
-  font-size: 20px;
-  min-height: 100%;
-  width: 100%;
-  line-height: 1.5;
-  font-feature-settings: "cpsp";
-  overflow: hidden;
-}
-
-.container,
-.container > div {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  width: 100%;
-  position: absolute;
-  overflow: hidden;
-}
-
-body,
-#react-root___3ejJB {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  width: 100%;
-  position: absolute;
-  overflow: hidden;
 }
