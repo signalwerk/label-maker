@@ -47,7 +47,7 @@ let md = dataIn => {
 };
 
 let isEmpty = text => {
-  if (text === "\n" || text === "\r\n") {
+  if (text === "" || text === "\n" || text === "\r\n") {
     return "empty";
   }
   return "normal";
