@@ -3,7 +3,6 @@ var path = require("path");
 var loaders = require("./webpack.loaders");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-var WebpackCleanupPlugin = require("webpack-cleanup-plugin");
 
 // local css modules
 loaders.push({
