@@ -29,6 +29,14 @@ body,
   position: absolute;
   overflow: hidden;
 }
+.MainPage___2ZK4M {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: scroll;
+}
 .ui___hAQjW {
   position: fixed;
   background-color: white;
@@ -97,14 +105,6 @@ body,
   background-color: #e6e6e6;
   box-sizing: border-box;
 }
-.MainPage___2ZK4M {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  width: 100%;
-  position: absolute;
-  overflow: scroll;
-}
 :root {
   --width: 90;
   --height: 130;
@@ -115,13 +115,15 @@ body,
   --design-grid-left: 10;
   --screenscale: 4;
   --printscale: 1;
+  --pScale: 1;
+  --h1Scale: 1;
   --bleed: 3;
   --cropmark: 10;
   --print-width: 210;
   --print-height: 297;
   --line-width: calc(var(--height) / 200);
-  --font-size: calc(var(--width) / 8);
-  --font-size-small: calc(var(--width) / 35);
+  --font-size: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 * var(--h1Scale));
+  --font-size-small: calc( (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 30 * var(--pScale));
 }
 
 @media print {
@@ -145,7 +147,7 @@ body,
 .container___2CBp_ {
   position: relative;
   margin: 0 auto;
-  margin-top: calc((100vh - (var(--height) * var(--screenscale) * 1px))/2);
+  margin-top: calc((100vh - (var(--height) * var(--screenscale) * 1px)) / 2);
   width: calc((var(--width) + 2 * var(--bleed)) * var(--screenscale) * 1px);
   height: calc((var(--height) + 2 * var(--bleed)) * var(--screenscale) * 1px);
 }
@@ -153,7 +155,7 @@ body,
 @media print {
   .container___2CBp_ {
     position: relative;
-    margin-top: calc(  ( var(--print-height) * 1mm - ((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm) )/2);
+    margin-top: calc( ( var(--print-height) * 1mm - ((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm) ) / 2);
     width: calc((var(--width) + 2 * var(--bleed)) * var(--printscale) * 1mm);
     height: calc((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm);
   }
@@ -243,37 +245,42 @@ body,
   position: absolute;
   margin: 0;
   padding: 0;
-  height: 0;
   width: 100%;
   border: none;
-  border-bottom: calc(var(--line-width) * var(--screenscale) * 1px) solid black;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-bottom-width: calc(var(--line-width) * var(--screenscale) * 1px - 1px);
   margin-top: calc(0px - ((var(--line-width) * var(--screenscale) * 1px) / 2));
+  height: 1px;
+  background-color: black;
 }
 
 @media print {
   .frontline___2qxan {
+    height: 0;
     border-bottom-width: calc(var(--line-width) * var(--printscale) * 1mm);
     margin-top: calc(0mm - ((var(--line-width) * var(--printscale) * 1mm) / 2));
   }
 }
 
-.top___3dIM- {
+.section_0___2d3s9 {
   top: 0%;
+  text-align: right;
 }
 
-.onequarter___3vibg {
+.section_1___1yH-S {
   top: 25%;
 }
 
-.center___3irlI {
+.section_2___1SwuI {
   top: 50%;
 }
 
-.treequarter___2QKaY {
+.section_3___u-fz8 {
   top: 75%;
 }
 
-.bottom___2UYkk {
+.section_4___30Pdi {
   top: 100%;
 }
 
@@ -320,38 +327,38 @@ body,
   position: absolute;
   height: 25%;
   width: 100%;
-  font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
-  padding-top: calc(var(--font-size-small) * var(--screenscale) * 1px / 5);
   box-sizing: border-box;
   line-height: 1.2;
 }
 
-@media print {
-  .box___1xRfv {
-    font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
-    padding-top: calc(var(--font-size-small) * var(--printscale) * 1mm / 5);
-  }
-}
-
 h1 {
   font-size: calc(var(--font-size) * var(--screenscale) * 1px);
-  margin-top: calc(var(--font-size) * var(--screenscale) * 1px / 10);
+  margin: calc(var(--font-size) * var(--screenscale) * 1px / 10) 0;
   line-height: 1;
 }
 
 @media print {
   h1 {
     font-size: calc(var(--font-size) * var(--printscale) * 1mm);
-    margin-top: calc(var(--font-size) * var(--printscale) * 1mm / 10);
+    margin: calc(var(--font-size) * var(--printscale) * 1mm / 10) 0;
   }
-}
-
-.right___2sB2R {
-  text-align: right;
 }
 
 p {
   margin: 0;
+  font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
+  padding-top: calc(var(--line-width) * var(--screenscale) * 1px * 1.6);
+}
+
+@media print {
+  p {
+    font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
+    padding-top: calc(var(--line-width) * var(--printscale) * 1mm * 1.6);
+  }
+}
+
+p ~ p {
+  padding-top: 0;
 }
 .uiToggle___2jfFU {
   display: block;
