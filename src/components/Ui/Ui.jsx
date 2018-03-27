@@ -94,6 +94,12 @@ class Ui extends PureComponent {
               value={this.props.text}
               onChange={this.changeText}
             />
+            <div className={styles.value__caption}>
+              {" "}
+              <span className={styles.value__valuerange}>
+                Original margins: L:12 R:16 T:7 B:12
+              </span>
+            </div>
           </div>
 
           {/*
