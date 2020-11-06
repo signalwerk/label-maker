@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - "6"
+  - "12"
 install:
-  - npm install
+  - npm ci
 script:
   - bash ./travis/gh-pages.sh
 env:
   global:
   - ENCRYPTION_LABEL: "78f84c33cabf"
   - COMMIT_AUTHOR_EMAIL: "sh@signalwerk.ch"
-  - DEPLOY_DIR: "public"
+  - DEPLOY_DIR: "build"
   - SOURCE_BRANCH: "master"
   - TARGET_BRANCH: "gh-pages"

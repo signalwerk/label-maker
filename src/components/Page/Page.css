@@ -1,28 +1,19 @@
-$debug: false;
-// $debug: true;
-
 :root {
   --width: 90;
   --height: 130;
-
   /* usualy same as format size */
-
   --design-grid-top: 5;
   --design-grid-right: 10;
   --design-grid-bottom: 5;
   --design-grid-left: 10;
-
   --screenscale: 4;
   --printscale: 1;
   --pScale: 100;
   --h1Scale: 100;
-
   --bleed: 3;
   --cropmark: 10;
-
   --print-width: 210;
   --print-height: 297;
-
   --line-width: calc(var(--height) / 250);
   --font-size: calc(
     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 6.5 *
@@ -32,14 +23,6 @@ $debug: false;
     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) / 30 *
       var(--pScale) / 100
   );
-
-  // --format-ratio: calc(
-  //   (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) /
-  //     (var(--width) - var(--design-grid-left) - var(--design-grid-right))
-  // );
-  //
-  // --font-size: calc(var(--format-ratio) * 7.5);
-  // --font-size-small: calc(var(--format-ratio) * 1.65);
 }
 
 @media print {
@@ -47,25 +30,21 @@ $debug: false;
     /* size: A4; */
     margin: 0mm;
   }
-
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 }
-
 @media print {
   html,
   body {
     width: calc(var(--print-width) * 1mm);
   }
 }
-
 .container {
   position: relative;
   margin: 0 auto;
   margin-top: calc((100vh - (var(--height) * var(--screenscale) * 1px)) / 2);
-
   width: calc((var(--width) + 2 * var(--bleed)) * var(--screenscale) * 1px);
   height: calc((var(--height) + 2 * var(--bleed)) * var(--screenscale) * 1px);
 }
@@ -79,12 +58,10 @@ $debug: false;
             ((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm)
         ) / 2
     );
-
     width: calc((var(--width) + 2 * var(--bleed)) * var(--printscale) * 1mm);
     height: calc((var(--height) + 2 * var(--bleed)) * var(--printscale) * 1mm);
   }
 }
-
 .cropMarks {
   position: absolute;
   top: 0;
@@ -100,14 +77,13 @@ $debug: false;
     border: calc(var(--bleed) * var(--printscale) * 1mm) solid white;
   }
 }
-
 .cropMark {
   position: absolute;
   border: solid black;
   z-index: -1;
 }
 
-.cropMark.vertical {
+.cropMark--vertical {
   position: absolute;
   top: calc(var(--cropmark) * var(--screenscale) * -1px);
   bottom: calc(var(--cropmark) * var(--screenscale) * -1px);
@@ -117,13 +93,12 @@ $debug: false;
 }
 
 @media print {
-  .cropMark.vertical {
+  .cropMark--vertical {
     top: calc(var(--cropmark) * var(--printscale) * -1mm);
     bottom: calc(var(--cropmark) * var(--printscale) * -1mm);
   }
 }
-
-.cropMark.horizontal {
+.cropMark--horizontal {
   position: absolute;
   top: 0;
   left: calc(var(--cropmark) * var(--screenscale) * -1px);
@@ -133,21 +108,17 @@ $debug: false;
 }
 
 @media print {
-  .cropMark.horizontal {
+  .cropMark--horizontal {
     left: calc(var(--cropmark) * var(--printscale) * -1mm);
     right: calc(var(--cropmark) * var(--printscale) * -1mm);
   }
 }
-
 .bleed {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  @if $debug == true {
-    background-color: red;
-  }
   overflow: hidden;
 }
 
@@ -167,7 +138,6 @@ $debug: false;
     bottom: calc(var(--bleed) * var(--printscale) * 1mm);
   }
 }
-
 .frontline {
   position: absolute;
   margin: 0;
@@ -176,15 +146,16 @@ $debug: false;
   border: none;
   border-bottom-style: solid;
   border-bottom-color: black;
-  // border-bottom-width: calc(var(--line-width) * var(--screenscale) * 1px);
   border-bottom-width: calc(var(--line-width) * var(--screenscale) * 1px - 1px);
   margin-top: calc(0px - ((var(--line-width) * var(--screenscale) * 1px) / 2));
   height: 1px;
   background-color: black;
 }
-.frontline:global(.empty) {
+
+.frontline.empty {
   display: none;
 }
+
 @media print {
   .frontline {
     height: 0;
@@ -193,7 +164,6 @@ $debug: false;
     margin-top: calc(0mm - ((var(--line-width) * var(--printscale) * 1mm) / 2));
   }
 }
-
 .section_0 {
   top: 0%;
   text-align: right;
@@ -221,14 +191,6 @@ $debug: false;
   left: 0;
   right: 0;
   bottom: 0;
-  @if $debug == true {
-    background-color: yellow;
-  }
-}
-
-@media print {
-  .content {
-  }
 }
 
 .designGrid {
@@ -237,7 +199,6 @@ $debug: false;
   left: 0;
   right: 0;
   bottom: 0;
-
   width: calc(
     (var(--width) - var(--design-grid-left) - var(--design-grid-right)) *
       var(--screenscale) * 1px
@@ -246,14 +207,9 @@ $debug: false;
     (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
       var(--screenscale) * 1px
   );
-
   /* place the design grid */
   margin-top: calc(var(--design-grid-top) * var(--screenscale) * 1px);
   margin-left: calc(var(--design-grid-left) * var(--screenscale) * 1px);
-
-  @if $debug == true {
-    background-color: gray;
-  }
   box-sizing: border-box;
 }
 
@@ -267,41 +223,32 @@ $debug: false;
       (var(--height) - var(--design-grid-top) - var(--design-grid-bottom)) *
         var(--printscale) * 1mm
     );
-
     /* place the design grid */
     margin-top: calc(var(--design-grid-top) * var(--printscale) * 1mm);
     margin-left: calc(var(--design-grid-left) * var(--printscale) * 1mm);
   }
 }
-
 .box {
   font-weight: 800;
   position: absolute;
   height: 25%;
   width: 100%;
-  @if $debug == true {
-    background-color: rgba(255, 0, 0, 0.5);
-  }
   box-sizing: border-box;
   line-height: 1.2;
 }
-
-// .cap {
-//   letter-spacing: 0.07em;
-// }
 
 h1 {
   font-size: calc(var(--font-size) * var(--screenscale) * 1px);
   margin: calc(var(--font-size) * var(--screenscale) * 1px / 10) 0;
   line-height: 1;
 }
+
 @media print {
   h1 {
     font-size: calc(var(--font-size) * var(--printscale) * 1mm);
     margin: calc(var(--font-size) * var(--printscale) * 1mm / 10) 0;
   }
 }
-
 h2 {
   font-size: calc(
     (var(--font-size-small) + var(--font-size)) / 2 * var(--screenscale) * 1px
@@ -313,6 +260,7 @@ h2 {
     0;
   line-height: 1;
 }
+
 @media print {
   h2 {
     font-size: calc(
@@ -325,7 +273,6 @@ h2 {
       0;
   }
 }
-
 p {
   font-weight: 600;
 }
@@ -334,7 +281,6 @@ h3,
 p {
   margin: 0;
   font-size: calc(var(--font-size-small) * var(--screenscale) * 1px);
-  // padding-top: calc(var(--font-size-small) * var(--screenscale) * 1px / 5 + );
   padding-top: calc(var(--line-width) * var(--screenscale) * 1px * 1.6);
 }
 
@@ -342,7 +288,6 @@ p {
   h3,
   p {
     font-size: calc(var(--font-size-small) * var(--printscale) * 1mm);
-    // padding-top: calc(var(--font-size-small) * var(--printscale) * 1mm / 5 + );
     padding-top: calc(var(--line-width) * var(--printscale) * 1mm * 1.6);
   }
 }

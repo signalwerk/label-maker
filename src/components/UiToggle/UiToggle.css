@@ -19,10 +19,10 @@
 
   -webkit-appearance: none;
   box-shadow: none;
+}
 
-  &:hover {
-    opacity: 0.5;
-  }
+.uiToggle:hover {
+  opacity: 0.5;
 }
 
 .cog {

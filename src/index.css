@@ -1,4 +1,3 @@
-// This is the top-level scss file
 html {
   margin: 0;
   padding: 0;
@@ -7,7 +6,8 @@ html {
   min-height: 100%;
   width: 100%;
   line-height: 1.5;
-  font-feature-settings: "cpsp"; // capital spacing
+  /*  capital spacing */
+  font-feature-settings: "cpsp";
   overflow: hidden;
 }
 

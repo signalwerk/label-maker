@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import styles from "./Page.scss";
+import "./Page.css";
 
 // https://codereview.stackexchange.com/questions/84988/converting-file-from-markdown-like-markup-into-html-using-repeated-substitutions
-let md = dataIn => {
+let md = (dataIn) => {
   // const md = function(dataIn) {
   // turn the data into an array
   let data = dataIn.split(/\r?\n/);
@@ -46,7 +46,7 @@ let md = dataIn => {
   return data;
 };
 
-let isEmpty = text => {
+let isEmpty = (text) => {
   if (text === "" || text === "\n" || text === "\r\n") {
     return "empty";
   }
@@ -60,33 +60,27 @@ class Page extends PureComponent {
     });
 
     return (
-      <div className={styles.row}>
-        <div className={styles.container}>
-          <div className={styles.cropMarks}>
-            <div className={`${styles.cropMark} ${styles.vertical}`} />
-            <div className={`${styles.cropMark} ${styles.horizontal}`} />
+      <div>
+        <div className="container">
+          <div className="cropMarks">
+            <div className="cropMark cropMark--vertical" />
+            <div className="cropMark cropMark--horizontal" />
           </div>
-          <div className={styles.bleed}>
-            <div className={styles.crop}>
-              <div className={styles.content}>
-                <div className={styles.designGrid}>
+          <div className="bleed">
+            <div className="crop">
+              <div className="content">
+                <div className="designGrid">
                   {this.props.text
                     .split("----")
                     .slice(0, 4)
                     .map((text, i) => {
                       return [
                         <hr
-                          className={`${styles.frontline} ${isEmpty(text)} ${
-                            styles["section_" + i]
-                          }`}
+                          className={`frontline ${isEmpty(text)} section_${i}`}
                         />,
-                        <div
-                          className={`${styles.box} ${isEmpty(text)} ${
-                            styles["section_" + i]
-                          }`}
-                        >
+                        <div className={`box ${isEmpty(text)} section_${i}`}>
                           <span>{md(text)}</span>
-                        </div>
+                        </div>,
                       ];
                     })}
                 </div>
@@ -101,7 +95,7 @@ class Page extends PureComponent {
 
 Page.propTypes = {
   // data: PropTypes.array.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
   // rowNumber: PropTypes.number.isRequired,
   // empty: PropTypes.string.isRequired
 };

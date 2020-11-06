@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import { addUrlProps, UrlQueryParamTypes } from "react-url-query";
 import PropTypes from "prop-types";
-import styles from "./MainPage.scss";
-import Ui from "../Ui/Ui";
-import Page from "../Page/Page";
-import CSSVariableApplicator from "../CSSVariableApplicator/CSSVariableApplicator";
-import UiToggle from "../UiToggle/UiToggle";
+import "./MainPage.css";
+import Ui from "../Ui";
+import Page from "../Page";
+import CSSVariableApplicator from "../CSSVariableApplicator";
+import UiToggle from "../UiToggle";
 
 const urlPropsQueryConfig = {
   text: { type: UrlQueryParamTypes.string },
@@ -21,7 +21,7 @@ const urlPropsQueryConfig = {
   isUiVisible: { type: UrlQueryParamTypes.boolean },
 
   pScale: { type: UrlQueryParamTypes.number },
-  h1Scale: { type: UrlQueryParamTypes.number }
+  h1Scale: { type: UrlQueryParamTypes.number },
 };
 
 class MainPage extends PureComponent {
@@ -60,7 +60,7 @@ class MainPage extends PureComponent {
     onChangeIsUiVisible: PropTypes.func.isRequired,
 
     onChangePScale: PropTypes.func.isRequired,
-    onChangeH1Scale: PropTypes.func.isRequired
+    onChangeH1Scale: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -82,13 +82,8 @@ class MainPage extends PureComponent {
     cropmark: true,
     isUiVisible: false,
     pScale: 100,
-    h1Scale: 100
+    h1Scale: 100,
   };
-  constructor() {
-    super();
-
-    const body = document.getElementsByTagName("body")[0];
-  }
 
   toggleClickHandler = () => {
     this.props.onChangeIsUiVisible(!this.props.isUiVisible);
@@ -96,8 +91,8 @@ class MainPage extends PureComponent {
 
   render() {
     return (
-      <div className={`${styles.MainPage} ${this.props.style}`}>
-        <div className={styles.visual}>
+      <div className="MainPage">
+        <div>
           <CSSVariableApplicator
             variables={{
               "--width": this.props.width,
@@ -109,14 +104,7 @@ class MainPage extends PureComponent {
               "--printscale": this.props.printscale / 100,
 
               "--pScale": this.props.pScale,
-              "--h1Scale": this.props.h1Scale
-
-              // "--format-ratio": Math.max(
-              //   (this.props.height - this.props.top - this.props.bottom) /
-              //     (this.props.width - this.props.left - this.props.right),
-              //   (this.props.width - this.props.left - this.props.right) /
-              //     (this.props.height - this.props.top - this.props.bottom)
-              // )
+              "--h1Scale": this.props.h1Scale,
             }}
           />
 

@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './UiToggle.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import "./UiToggle.css";
 
 const UiToggle = (props) => {
   const { isUiVisible, toggleClickHandler } = props;
   const toggleValue = (bool) => {
-    if (!bool) return `${styles.cog} ${styles.uiToggle}`;
-    return `${styles.cross} ${styles.uiToggle}`;
+    if (!bool) return `cog uiToggle`;
+    return `cross uiToggle`;
   };
   return (
     <input
       type="button"
       className={toggleValue(isUiVisible)}
-      value={''}
+      value={""}
       onClick={toggleClickHandler}
     />
   );

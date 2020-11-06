@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MainPage from "../MainPage/MainPage";
+import MainPage from "../MainPage/";
 import history from "../../history";
 
 class App extends Component {
