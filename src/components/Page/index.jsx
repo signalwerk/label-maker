@@ -55,10 +55,6 @@ let isEmpty = (text) => {
 
 class Page extends PureComponent {
   render() {
-    let texts = this.props.text.split("----").map((text, i) => {
-      return <span>{md(text)}</span>;
-    });
-
     return (
       <div>
         <div className="container">
