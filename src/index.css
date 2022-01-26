@@ -30,3 +30,7 @@ body,
   position: absolute;
   overflow: hidden;
 }
+
+div {
+  overflow: hidden;
+}
