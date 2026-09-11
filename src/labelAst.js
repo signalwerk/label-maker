@@ -1,7 +1,7 @@
-import workSansMediumUrl from "../mini-pdf/examples/assets/fonts/Work Sans/WorkSans-Medium.ttf?inline";
+import WorkSansSemiBoldUrl from "../mini-pdf/examples/assets/fonts/Work Sans/WorkSans-SemiBold.ttf?inline";
 import workSansExtraBoldUrl from "../mini-pdf/examples/assets/fonts/Work Sans/WorkSans-ExtraBold.ttf?inline";
 
-const FONT_MEDIUM = "WorkSansMedium";
+const FONT_MEDIUM = "WorkSansSemiBold";
 const FONT_EXTRA_BOLD = "WorkSansExtraBold";
 const MAGENTA = [1, 0, 1];
 const BLACK = [0, 0, 0];
@@ -16,7 +16,7 @@ const dataUrlBytes = (url) => {
   return Uint8Array.from(binary, (character) => character.charCodeAt(0));
 };
 
-const WORK_SANS_MEDIUM = dataUrlBytes(workSansMediumUrl);
+const WORK_SANS_MEDIUM = dataUrlBytes(WorkSansSemiBoldUrl);
 const WORK_SANS_EXTRA_BOLD = dataUrlBytes(workSansExtraBoldUrl);
 
 const cropmarkNodes = (width, height) => {

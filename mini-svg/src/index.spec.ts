@@ -2,9 +2,9 @@ import * as fs from "node:fs";
 import type { Document } from "mini-pdf";
 import { Writer, renderSvgPages } from ".";
 
-const workSansMedium = fs.readFileSync(
+const WorkSansSemiBold = fs.readFileSync(
   new URL(
-    "../../mini-pdf/examples/assets/fonts/Work Sans/WorkSans-Medium.ttf",
+    "../../mini-pdf/examples/assets/fonts/Work Sans/WorkSans-SemiBold.ttf",
     import.meta.url,
   ),
 );
@@ -163,7 +163,7 @@ test("wraps label copy before the active area's right edge", () => {
         id: "F1",
         family: "Work Sans",
         weight: 600,
-        data: workSansMedium,
+        data: WorkSansSemiBold,
       } as Document["fonts"][number],
     ],
   });
