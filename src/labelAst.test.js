@@ -29,14 +29,17 @@ test("converts label sections into active-area, line, and text nodes", () => {
       borderColour: [1, 0, 1],
     },
   });
-  expect(lines.map(({ attributes }) => attributes.y1)).toEqual([10, 25, 55]);
+  expect(lines.map(({ attributes }) => attributes.y1)).toEqual([
+    10, 25, 40, 55,
+  ]);
   expect(
     lines.map(({ attributes }) => attributes.x2 - attributes.x1)
-  ).toEqual([80, 80, 80]);
+  ).toEqual([80, 80, 80, 80]);
   expect(lines.map(({ attributes }) => attributes.borderWidth)).toEqual([
-    0.32, 0.32, 0.32,
+    0.32, 0.32, 0.32, 0.32,
   ]);
   expect(lines.map(({ attributes }) => attributes.borderColour)).toEqual([
+    [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],

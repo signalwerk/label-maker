@@ -100,7 +100,7 @@ describe("URL-connected label settings", () => {
     expect(activeArea).toHaveAttribute("fill", "none");
     expect(activeArea).toHaveAttribute("stroke", "rgb(255 0 255)");
     expect(activeArea).toHaveAttribute("stroke-width", "0.32");
-    expect(sectionLines).toHaveLength(3);
+    expect(sectionLines).toHaveLength(4);
     sectionLines.forEach((line) => {
       expect(line).toHaveAttribute("x1", "20");
       expect(line).toHaveAttribute("x2", "90");

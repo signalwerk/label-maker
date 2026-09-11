@@ -159,12 +159,14 @@ export const createLabelDocument = ({
     });
   }
 
-  text
-    .split("----")
-    .slice(0, 4)
-    .forEach((section, sectionIndex) => {
-      if (section.trim() === "") return;
+  const sections = text.split("----").slice(0, 4);
+  const lastFilledIndex = sections.findLastIndex(
+    (section) => section.trim() !== ""
+  );
 
+  sections
+    .slice(0, lastFilledIndex + 1)
+    .forEach((section, sectionIndex) => {
       const sectionTop = contentTop + sectionHeight * sectionIndex;
       children.push({
         type: "LINE",
