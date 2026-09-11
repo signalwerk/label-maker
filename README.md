@@ -21,6 +21,9 @@ npm run build
 npm run preview
 ```
 
+Every push to `main` is tested, built, and deployed to GitHub Pages by
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml).
+
 Open the settings panel with the gear button to download the current label as
 a PDF, show the optional magenta active-area guide, or add cropmarks. Cropmarks
 start 3 mm outside the trim edge and are 7 mm long, so enabling them extends

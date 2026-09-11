@@ -20,15 +20,13 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run --passWithNoTests",
-    "deploy": "npm run build && gh-pages -d dist"
+    "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@vitejs/plugin-react": "^6.0.5",
-    "gh-pages": "^6.3.0",
     "jsdom": "^29.1.1",
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
