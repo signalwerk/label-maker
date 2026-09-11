@@ -133,7 +133,6 @@ export const createLabelDocument = ({
   const pageHeight = height + pageOffset * 2;
   const contentWidth = Math.max(0, width - left - right);
   const activeHeight = Math.max(0, height - top - bottom);
-  const sectionHeight = activeHeight / 4;
   const borderWidth = height / 250;
   const contentLeft = pageOffset + left;
   const contentTop = pageOffset + top;
@@ -159,7 +158,11 @@ export const createLabelDocument = ({
     });
   }
 
-  const sections = text.split("----").slice(0, 4);
+  const allSections = text.split("----");
+  // A single separator splits the label in half; otherwise use quarters.
+  const sectionCount = allSections.length === 2 ? 2 : 4;
+  const sectionHeight = activeHeight / sectionCount;
+  const sections = allSections.slice(0, sectionCount);
   const lastFilledIndex = sections.findLastIndex(
     (section) => section.trim() !== ""
   );

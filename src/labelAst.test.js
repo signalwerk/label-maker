@@ -58,6 +58,30 @@ test("converts label sections into active-area, line, and text nodes", () => {
   });
 });
 
+test("splits the active area in half when there is a single separator", () => {
+  const document = createLabelDocument({
+    text: "# First\n----\nSecond",
+    width: 100,
+    height: 80,
+    top: 10,
+    right: 10,
+    bottom: 10,
+    left: 10,
+    pScale: 100,
+    h1Scale: 100,
+  });
+  const children = document.children[0].children;
+  const lines = children.filter(({ type }) => type === "LINE");
+  const text = children.filter(({ type }) => type === "TEXTBOX");
+
+  expect(lines.map(({ attributes }) => attributes.y1)).toEqual([10, 40]);
+  expect(text.map(({ attributes }) => attributes.content)).toEqual([
+    "First",
+    "Second",
+  ]);
+  expect(text[1].attributes.y + text[1].attributes.height).toBe(70);
+});
+
 test("adds 3 mm crop gaps and 7 mm marks on a page extended by 10 mm per side", () => {
   const document = createLabelDocument({
     text: "",
