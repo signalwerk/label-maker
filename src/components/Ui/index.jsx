@@ -2,6 +2,13 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import "./Ui.css";
 
+const isPositiveNumber = (value) => {
+  if (value === "") return false;
+
+  const number = Number(value);
+  return Number.isFinite(number) && number > 0;
+};
+
 class Ui extends PureComponent {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
@@ -14,8 +21,8 @@ class Ui extends PureComponent {
     bottom: PropTypes.number.isRequired,
     left: PropTypes.number.isRequired,
     bleed: PropTypes.number.isRequired,
-    printscale: PropTypes.number.isRequired,
     cropmark: PropTypes.bool.isRequired,
+    debugBorder: PropTypes.bool.isRequired,
 
     pScale: PropTypes.number.isRequired,
     h1Scale: PropTypes.number.isRequired,
@@ -28,20 +35,49 @@ class Ui extends PureComponent {
     changeBottom: PropTypes.func.isRequired,
     changeLeft: PropTypes.func.isRequired,
     changeBleed: PropTypes.func.isRequired,
-    changePrintscale: PropTypes.func.isRequired,
     changeCropmark: PropTypes.func.isRequired,
+    changeDebugBorder: PropTypes.func.isRequired,
+    downloadPdf: PropTypes.func.isRequired,
     changePScale: PropTypes.func.isRequired,
     changeH1Scale: PropTypes.func.isRequired,
+  };
+
+  state = {
+    widthDraft: null,
+    heightDraft: null,
   };
 
   changeText = (event) => {
     this.props.changeText(event.target.value);
   };
+  changeDimension = (draftName, change, value) => {
+    if (isPositiveNumber(value)) {
+      this.setState({ [draftName]: null });
+      change(value);
+      return;
+    }
+
+    this.setState({ [draftName]: value });
+  };
   changeWidth = (event) => {
-    this.props.changeWidth(event.target.value);
+    this.changeDimension(
+      "widthDraft",
+      this.props.changeWidth,
+      event.target.value
+    );
   };
   changeHeight = (event) => {
-    this.props.changeHeight(event.target.value);
+    this.changeDimension(
+      "heightDraft",
+      this.props.changeHeight,
+      event.target.value
+    );
+  };
+  resetWidthDraft = () => {
+    this.setState({ widthDraft: null });
+  };
+  resetHeightDraft = () => {
+    this.setState({ heightDraft: null });
   };
   changeTop = (event) => {
     this.props.changeTop(event.target.value);
@@ -58,11 +94,11 @@ class Ui extends PureComponent {
   changeBleed = (event) => {
     this.props.changeBleed(event.target.value);
   };
-  changePrintscale = (event) => {
-    this.props.changePrintscale(event.target.value);
-  };
   changeCropmark = (event) => {
-    this.props.changeCropmark(event.target.value);
+    this.props.changeCropmark(event.target.checked);
+  };
+  changeDebugBorder = (event) => {
+    this.props.changeDebugBorder(event.target.checked);
   };
   changePScale = (event) => {
     this.props.changePScale(event.target.value);
@@ -81,7 +117,10 @@ class Ui extends PureComponent {
           <br />
           <div className="value">
             <div className="value__caption">
-              Text <span className="value__valuerange">separated by line</span>
+              Text{" "}
+              <span className="value__valuerange">
+                use \n for a forced line break
+              </span>
             </div>
             <textarea
               name="word"
@@ -99,20 +138,39 @@ class Ui extends PureComponent {
             </div>
           </div>
 
-          {/*
           <div className="value">
             <div className="value__caption">
-              Cropmarks{" "}
-              <span className="value__valuerange">true/false</span>
+              Cropmarks
             </div>
             <input
-              className="value__input"
+              aria-label="Cropmarks"
+              className="value__input value__input--checkbox"
               type="checkbox"
               checked={this.props.cropmark}
               onChange={this.changeCropmark}
             />
           </div>
-*/}
+
+          <div className="value">
+            <div className="value__caption">Show active-area guide</div>
+            <input
+              aria-label="Show active-area guide"
+              className="value__input value__input--checkbox"
+              type="checkbox"
+              checked={this.props.debugBorder}
+              onChange={this.changeDebugBorder}
+            />
+          </div>
+
+          <div className="value">
+            <button
+              className="value__button"
+              type="button"
+              onClick={this.props.downloadPdf}
+            >
+              Download PDF
+            </button>
+          </div>
           <div className="value">
             <div className="value__caption">
               Width <span className="value__valuerange">0–~</span>
@@ -120,8 +178,9 @@ class Ui extends PureComponent {
             <input
               className="value__input"
               type="number"
-              value={this.props.width}
+              value={this.state.widthDraft ?? this.props.width}
               onChange={this.changeWidth}
+              onBlur={this.resetWidthDraft}
             />
           </div>
 
@@ -132,8 +191,9 @@ class Ui extends PureComponent {
             <input
               className="value__input"
               type="number"
-              value={this.props.height}
+              value={this.state.heightDraft ?? this.props.height}
               onChange={this.changeHeight}
+              onBlur={this.resetHeightDraft}
             />
           </div>
 
@@ -158,18 +218,6 @@ class Ui extends PureComponent {
               type="number"
               value={this.props.h1Scale}
               onChange={this.changeH1Scale}
-            />
-          </div>
-
-          <div className="value">
-            <div className="value__caption">
-              Scale for print <span className="value__valuerange">0–~%</span>
-            </div>
-            <input
-              className="value__input"
-              type="number"
-              value={this.props.printscale}
-              onChange={this.changePrintscale}
             />
           </div>
 

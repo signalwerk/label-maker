@@ -1,27 +1,70 @@
 import React, { PureComponent } from "react";
-import { addUrlProps, UrlQueryParamTypes } from "react-url-query";
 import PropTypes from "prop-types";
 import "./MainPage.css";
 import Ui from "../Ui";
 import Page from "../Page";
-import CSSVariableApplicator from "../CSSVariableApplicator";
 import UiToggle from "../UiToggle";
+import { createLabelDocument } from "../../labelAst";
+import { downloadPdf } from "../../pdfDownload";
 
 const urlPropsQueryConfig = {
-  text: { type: UrlQueryParamTypes.string },
-  width: { type: UrlQueryParamTypes.number },
-  height: { type: UrlQueryParamTypes.number },
-  top: { type: UrlQueryParamTypes.number },
-  right: { type: UrlQueryParamTypes.number },
-  bottom: { type: UrlQueryParamTypes.number },
-  left: { type: UrlQueryParamTypes.number },
-  bleed: { type: UrlQueryParamTypes.number },
-  printscale: { type: UrlQueryParamTypes.number },
-  cropmark: { type: UrlQueryParamTypes.boolean },
-  isUiVisible: { type: UrlQueryParamTypes.boolean },
+  text: "string",
+  width: "number",
+  height: "number",
+  top: "number",
+  right: "number",
+  bottom: "number",
+  left: "number",
+  bleed: "number",
+  cropmark: "boolean",
+  debugBorder: "boolean",
+  isUiVisible: "boolean",
+  pScale: "number",
+  h1Scale: "number",
+};
 
-  pScale: { type: UrlQueryParamTypes.number },
-  h1Scale: { type: UrlQueryParamTypes.number },
+const changeHandlerNames = {
+  text: "onChangeText",
+  width: "onChangeWidth",
+  height: "onChangeHeight",
+  top: "onChangeTop",
+  right: "onChangeRight",
+  bottom: "onChangeBottom",
+  left: "onChangeLeft",
+  bleed: "onChangeBleed",
+  cropmark: "onChangeCropmark",
+  debugBorder: "onChangeDebugBorder",
+  isUiVisible: "onChangeIsUiVisible",
+  pScale: "onChangePScale",
+  h1Scale: "onChangeH1Scale",
+};
+
+const decodeQueryValue = (value, type) => {
+  if (value === null) return undefined;
+  if (type === "number") {
+    const number = Number(value);
+    return Number.isNaN(number) ? undefined : number;
+  }
+  if (type === "boolean") return value === "1" || value === "true";
+  if (/%[0-9a-f]{2}/i.test(value)) {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  }
+  return value;
+};
+
+const getUrlProps = (search) => {
+  const searchParams = new URLSearchParams(search);
+
+  return Object.fromEntries(
+    Object.entries(urlPropsQueryConfig).map(([name, type]) => [
+      name,
+      decodeQueryValue(searchParams.get(name), type),
+    ])
+  );
 };
 
 class MainPage extends PureComponent {
@@ -36,8 +79,8 @@ class MainPage extends PureComponent {
     bottom: PropTypes.number,
     left: PropTypes.number,
     bleed: PropTypes.number,
-    printscale: PropTypes.number,
     cropmark: PropTypes.bool,
+    debugBorder: PropTypes.bool,
     isUiVisible: PropTypes.bool,
 
     pScale: PropTypes.number,
@@ -56,7 +99,7 @@ class MainPage extends PureComponent {
     onChangeLeft: PropTypes.func.isRequired,
     onChangeBleed: PropTypes.func.isRequired,
     onChangeCropmark: PropTypes.func.isRequired,
-    onChangePrintscale: PropTypes.func.isRequired,
+    onChangeDebugBorder: PropTypes.func.isRequired,
     onChangeIsUiVisible: PropTypes.func.isRequired,
 
     onChangePScale: PropTypes.func.isRequired,
@@ -78,8 +121,8 @@ class MainPage extends PureComponent {
     bottom: 4,
     left: 6,
     bleed: 3,
-    printscale: 100,
-    cropmark: true,
+    cropmark: false,
+    debugBorder: false,
     isUiVisible: false,
     pScale: 100,
     h1Scale: 100,
@@ -90,25 +133,12 @@ class MainPage extends PureComponent {
   };
 
   render() {
+    const document = createLabelDocument(this.props);
+
     return (
       <div className="MainPage">
         <div>
-          <CSSVariableApplicator
-            variables={{
-              "--width": this.props.width,
-              "--height": this.props.height,
-              "--design-grid-top": this.props.top,
-              "--design-grid-right": this.props.right,
-              "--design-grid-bottom": this.props.bottom,
-              "--design-grid-left": this.props.left,
-              "--printscale": this.props.printscale / 100,
-
-              "--pScale": this.props.pScale,
-              "--h1Scale": this.props.h1Scale,
-            }}
-          />
-
-          <Page text={this.props.text} />
+          <Page document={document} />
           <UiToggle
             isUiVisible={this.props.isUiVisible}
             toggleClickHandler={this.toggleClickHandler}
@@ -123,8 +153,8 @@ class MainPage extends PureComponent {
             bottom={this.props.bottom}
             left={this.props.left}
             bleed={this.props.bleed}
-            printscale={this.props.printscale}
             cropmark={this.props.cropmark}
+            debugBorder={this.props.debugBorder}
             pScale={this.props.pScale}
             h1Scale={this.props.h1Scale}
             changeText={this.props.onChangeText}
@@ -135,8 +165,14 @@ class MainPage extends PureComponent {
             changeBottom={this.props.onChangeBottom}
             changeLeft={this.props.onChangeLeft}
             changeBleed={this.props.onChangeBleed}
-            changePrintscale={this.props.onChangePrintscale}
             changeCropmark={this.props.onChangeCropmark}
+            changeDebugBorder={this.props.onChangeDebugBorder}
+            downloadPdf={() =>
+              downloadPdf(
+                document,
+                `label-${this.props.width}x${this.props.height}mm.pdf`
+              )
+            }
             changePScale={this.props.onChangePScale}
             changeH1Scale={this.props.onChangeH1Scale}
           />
@@ -145,4 +181,46 @@ class MainPage extends PureComponent {
     );
   }
 }
-export default addUrlProps({ urlPropsQueryConfig })(MainPage);
+
+class UrlConnectedMainPage extends PureComponent {
+  state = { search: window.location.search };
+
+  componentDidMount() {
+    window.addEventListener("popstate", this.handleLocationChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.handleLocationChange);
+  }
+
+  handleLocationChange = () => {
+    this.setState({ search: window.location.search });
+  };
+
+  updateQueryParam = (name, type, value) => {
+    const url = new URL(window.location.href);
+    const encodedValue = type === "boolean" ? (value ? "1" : "0") : value;
+
+    if (encodedValue === undefined || encodedValue === null) {
+      url.searchParams.delete(name);
+    } else {
+      url.searchParams.set(name, encodedValue);
+    }
+
+    window.history.pushState({}, "", url);
+    this.handleLocationChange();
+  };
+
+  render() {
+    const changeHandlers = Object.fromEntries(
+      Object.entries(urlPropsQueryConfig).map(([name, type]) => [
+        changeHandlerNames[name],
+        (value) => this.updateQueryParam(name, type, value),
+      ])
+    );
+
+    return <MainPage {...getUrlProps(this.state.search)} {...changeHandlers} />;
+  }
+}
+
+export default UrlConnectedMainPage;

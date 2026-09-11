@@ -52,9 +52,11 @@
 }
 
 .value__button {
-  background-color: gray;
+  border: 0;
+  color: white;
+  background-color: #222;
   font-size: 0.9rem;
-  padding: 0.1rem 0.5rem;
+  padding: 0.55rem 0.8rem;
   border-radius: 0.5rem;
   cursor: pointer;
   text-transform: uppercase;
@@ -65,4 +67,8 @@
   font-size: 1rem;
   background-color: #e6e6e6;
   box-sizing: border-box;
+}
+
+.value__input--checkbox {
+  width: auto;
 }

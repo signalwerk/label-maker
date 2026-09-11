@@ -1,23 +1,10 @@
-import React, { Component } from "react";
-import MainPage from "../MainPage/";
-import history from "../../history";
+import React from "react";
+import MainPage from "../MainPage";
 
-class App extends Component {
-  componentDidMount() {
-    // force an update if the URL changes
-    history.listen(() => {
-      this.forceUpdate();
-    });
-    this.forceUpdate();
-  }
-
-  render() {
-    return (
-      <div>
-        <MainPage />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div>
+    <MainPage />
+  </div>
+);
 
 export default App;

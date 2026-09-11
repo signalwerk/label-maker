@@ -1,0 +1,44 @@
+{
+  "name": "mini-svg",
+  "version": "0.0.1",
+  "description": "Render mini-pdf document ASTs as SVG",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "24.x",
+    "npm": ">=11"
+  },
+  "packageManager": "npm@11.12.1",
+  "scripts": {
+    "build": "vite build && npm run build:types",
+    "build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "mini-pdf": "^0.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "mini-pdf": "file:../mini-pdf",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "fontkit": "^2.0.4"
+  }
+}
